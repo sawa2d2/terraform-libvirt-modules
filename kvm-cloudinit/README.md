@@ -2,7 +2,7 @@
 Prepare main.tf as follow: 
 ```
 module "my_module" {
-  source                  = "path/to/terraform-modules/kvm-cloudinit"
+  source                  = "github.com/sawa2d2/terraform-modules//kvm-cloudinit/"
   libvirt_uri             = "qemu:///system"
   vm_base_image_uri       = "/var/lib/libvirt/images/Rocky-9-GenericCloud.latest.x86_64.qcow2"
   virtual_bridge          = "br0"
