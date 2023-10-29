@@ -42,6 +42,12 @@ variable "vms" {
       ip          = string
       mac         = string
       description = string
+      volumes = list(
+        object({
+          name = string
+          disk = number
+        })
+      )
     })
   )
 }
