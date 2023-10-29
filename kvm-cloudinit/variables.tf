@@ -29,7 +29,7 @@ variable "cloud_init_cfg_path" {
 
 variable "network_config_cfg_path" {
   type    = string
-  default = "network_config.cfg.tpl"
+  default = "network_config.cfg"
 }
 
 variable "vms" {
