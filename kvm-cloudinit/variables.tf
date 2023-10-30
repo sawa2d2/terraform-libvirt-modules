@@ -27,11 +27,6 @@ variable "cloud_init_cfg_path" {
   default = "cloud_init.cfg"
 }
 
-variable "network_config_cfg_path" {
-  type    = string
-  default = "network_config.cfg"
-}
-
 variable "vms" {
   type = list(
     object({

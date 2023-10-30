@@ -1,11 +1,10 @@
-
 data "template_file" "user_data" {
   template = file(var.cloud_init_cfg_path)
 }
 
 data "template_file" "network_config" {
   count    = length(var.vms)
-  template = file(var.network_config_cfg_path)
+  template = file("${path.module}/network_config.cfg")
   vars = {
     ip          = var.vms[count.index].ip
     gateway     = var.gateway
