@@ -7,10 +7,14 @@ variable "vm_base_image_uri" {
   type = string
 }
 
-variable "virtual_bridge" {
+variable "bridge" {
   type    = string
   default = "br0"
 
+}
+
+variable "cidr_prefix" {
+  type = string
 }
 
 variable "gateway" {

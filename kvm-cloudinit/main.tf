@@ -6,7 +6,7 @@ data "template_file" "network_config" {
   count    = length(var.vms)
   template = file("${path.module}/network_config.cfg")
   vars = {
-    ip          = var.vms[count.index].ip
+    ip          = "${var.vms[count.index].ip}/${var.cidr_prefix}"
     gateway     = var.gateway
     nameservers = var.nameservers
   }
@@ -52,7 +52,7 @@ resource "libvirt_domain" "vm" {
     hostname  = var.vms[count.index].name
     addresses = [var.vms[count.index].ip]
     mac       = var.vms[count.index].mac
-    bridge    = var.virtual_bridge
+    bridge    = var.bridge
   }
   qemu_agent = true
 
