@@ -8,11 +8,12 @@ libvirt_uri = "qemu:///system"
 vm_base_image_uri = "/var/lib/libvirt/images/Rocky-9-GenericCloud.latest.x86_64.qcow2"
 
 # Networking
-bridge = "br0"
-
+bridge      = "br0"
 cidr_prefix = "24"
 gateway     = "192.168.8.1"
 nameservers = "[\"192.168.8.1\"]"
+
+pool = "default"
 
 vms = [
   {

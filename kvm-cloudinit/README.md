@@ -12,6 +12,7 @@ module "kvm_cloudinit" {
   gateway                 = "192.168.8.1"
   nameservers             = "[\"192.168.8.1\"]"
   cloud_init_cfg_path     = "${path.module}/cloud_init.cfg"
+  pool                    = "default"
   vms = [
     {
       name        = "storage-1"

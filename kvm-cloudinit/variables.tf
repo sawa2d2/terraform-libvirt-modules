@@ -31,6 +31,11 @@ variable "cloud_init_cfg_path" {
   default = "cloud_init.cfg"
 }
 
+variable "pool" {
+  type    = string
+  default = "default"
+}
+
 variable "vms" {
   type = list(
     object({
