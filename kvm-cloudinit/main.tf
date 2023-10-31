@@ -64,6 +64,12 @@ resource "libvirt_domain" "vm" {
     type        = "vnc"
     listen_type = "address"
   }
+
+  console {
+    type        = "pty"
+    target_port = "0"
+    target_type = "serial"
+  }
 }
 
 resource "libvirt_volume" "system" {
