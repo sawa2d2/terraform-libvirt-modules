@@ -26,11 +26,6 @@ variable "nameservers" {
   default = "[\"8.8.8.8\", \"8.8.4.4\"]"
 }
 
-variable "cloud_init_cfg_path" {
-  type    = string
-  default = "cloud_init.cfg"
-}
-
 variable "pool" {
   type    = string
   default = "default"
@@ -39,13 +34,14 @@ variable "pool" {
 variable "vms" {
   type = list(
     object({
-      name        = string
-      vcpu        = number
-      memory      = number
-      disk        = number
-      ip          = string
-      mac         = string
-      description = string
+      name           = string
+      vcpu           = number
+      memory         = number
+      disk           = number
+      ip             = string
+      mac            = string
+      cloudinit_file = string
+      description    = string
       volumes = list(
         object({
           name = string

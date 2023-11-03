@@ -1,5 +1,6 @@
 data "template_file" "user_data" {
-  template = file(var.cloud_init_cfg_path)
+  count    = length(var.vms)
+  template = file(var.vms[count.index].cloudinit_file)
 }
 
 data "template_file" "network_config" {
@@ -15,7 +16,7 @@ data "template_file" "network_config" {
 resource "libvirt_cloudinit_disk" "commoninit" {
   count          = length(var.vms)
   name           = "commoninit_${var.vms[count.index].name}.iso"
-  user_data      = data.template_file.user_data.rendered
+  user_data      = data.template_file.user_data[count.index].rendered
   network_config = data.template_file.network_config[count.index].rendered
 }
 
@@ -65,6 +66,7 @@ resource "libvirt_domain" "vm" {
     listen_type = "address"
   }
 
+  # Makes the tty0 available via `virsh console`
   console {
     type        = "pty"
     target_port = "0"

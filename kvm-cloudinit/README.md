@@ -5,71 +5,81 @@ Prepare `main.tf` as follows:
 module "kvm_cloudinit" {
   source = "github.com/sawa2d2/terraform-modules//kvm-cloudinit/"
 
-  libvirt_uri             = "qemu:///system"
-  vm_base_image_uri       = "/var/lib/libvirt/images/Rocky-9-GenericCloud.latest.x86_64.qcow2"
-  bridge                  = "br0"
-  cidr_prefix             = 24
-  gateway                 = "192.168.8.1"
-  nameservers             = "[\"192.168.8.1\"]"
-  cloud_init_cfg_path     = "${path.module}/cloud_init.cfg"
-  pool                    = "default"
+  # Localhost: "qemu:///system"
+  # Remote   : "qemu+ssh://<user>@<host>/system"
+  libvirt_uri = "qemu:///system"
+  
+  ### Base image URI for VM ###
+  # Download the image by:
+  #   sudo curl -L -o /var/lib/libvirt/images/Rocky-9-GenericCloud.latest.x86_64.qcow2 https://download.rockylinux.org/pub/rocky/9.2/images/x86_64/Rocky-9-GenericCloud.latest.x86_64.qcow2 
+  vm_base_image_uri = "/var/lib/libvirt/images/Rocky-9-GenericCloud.latest.x86_64.qcow2"
+  
+  # Networking
+  bridge      = "br0"
+  cidr_prefix = "24"
+  gateway     = "192.168.8.1"
+  nameservers = "[\"192.168.8.1\"]"
+  
+  pool = "default"
+  
   vms = [
     {
-      name        = "storage-1"
-      vcpu        = 4
-      memory      = 16000                    # in MiB
-      disk        = 100 * 1024 * 1024 * 1024 # 100 GB
-      ip          = "192.168.8.201"
-      mac         = "52:54:00:00:00:01"
-      description = ""
+      name           = "vm1"
+      vcpu           = 4
+      memory         = 16000                    # in MiB
+      disk           = 100 * 1024 * 1024 * 1024 # 100 GB
+      ip             = "192.168.8.200"
+      mac            = "52:54:00:00:00:00"
+      cloudinit_file = "cloud_init.cfg"
+      description    = ""
       volumes = [
         {
           name = "vdb"
-          disk = 1024 * 1024 * 1024 * 1024 # 1 TB
+          disk = 1024 * 1024 * 1024 * 1024 # 1 TB 
+        },
+        {
+          name = "vdc"
+          disk = 1024 * 1024 * 1024 * 1024 # 1 TB 
         },
       ]
     },
     {
-      name        = "storage-2"
-      vcpu        = 4
-      memory      = 16000                    # in MiB
-      disk        = 100 * 1024 * 1024 * 1024 # 100 GB
-      ip          = "192.168.8.202"
-      mac         = "52:54:00:00:00:02"
-      description = ""
+      name           = "vm2"
+      vcpu           = 4
+      memory         = 16000                    # in MiB
+      disk           = 100 * 1024 * 1024 * 1024 # 100 GB
+      ip             = "192.168.8.201"
+      mac            = "52:54:00:00:00:01"
+      cloudinit_file = "cloud_init.cfg"
+      description    = ""
       volumes = [
         {
           name = "vdb"
-          disk = 1024 * 1024 * 1024 * 1024 # 1 TB
+          disk = 1024 * 1024 * 1024 * 1024 # 1 TB 
         },
       ]
     },
     {
-      name        = "storage-3"
-      vcpu        = 4
-      memory      = 16000                    # in MiB
-      disk        = 100 * 1024 * 1024 * 1024 # 100 GB
-      ip          = "192.168.8.203"
-      mac         = "52:54:00:00:00:03"
-      description = ""
+      name           = "vm3"
+      vcpu           = 4
+      memory         = 16000                    # in MiB
+      disk           = 100 * 1024 * 1024 * 1024 # 100 GB
+      ip             = "192.168.8.202"
+      mac            = "52:54:00:00:00:02"
+      cloudinit_file = "cloud_init.cfg"
+      description    = ""
       volumes = [
         {
           name = "vdb"
-          disk = 1024 * 1024 * 1024 * 1024 # 1 TB
+          disk = 1024 * 1024 * 1024 * 1024 # 1 TB 
+        },
+        {
+          name = "vdc"
+          disk = 1024 * 1024 * 1024 * 1024 # 1 TB 
         },
       ]
-    },
-    {
-      name        = "app"
-      vcpu        = 4
-      memory      = 16000                    # in MiB
-      disk        = 100 * 1024 * 1024 * 1024 # 100 GB
-      ip          = "192.168.8.204"
-      mac         = "52:54:00:00:00:04"
-      description = ""
-      volumes     = []
     },
   ]
-}
+}  
 ```
 

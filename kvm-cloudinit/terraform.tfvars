@@ -17,13 +17,14 @@ pool = "default"
 
 vms = [
   {
-    name        = "vm1"
-    vcpu        = 4
-    memory      = 16000                    # in MiB
-    disk        = 100 * 1024 * 1024 * 1024 # 100 GB
-    ip          = "192.168.8.200"
-    mac         = "52:54:00:00:00:00"
-    description = ""
+    name           = "vm1"
+    vcpu           = 4
+    memory         = 16000                    # in MiB
+    disk           = 100 * 1024 * 1024 * 1024 # 100 GB
+    ip             = "192.168.8.200"
+    mac            = "52:54:00:00:00:00"
+    cloudinit_file = "cloud_init.cfg"
+    description    = ""
     volumes = [
       {
         name = "vdb"
@@ -36,13 +37,14 @@ vms = [
     ]
   },
   {
-    name        = "vm2"
-    vcpu        = 4
-    memory      = 16000                    # in MiB
-    disk        = 100 * 1024 * 1024 * 1024 # 100 GB
-    ip          = "192.168.8.201"
-    mac         = "52:54:00:00:00:01"
-    description = ""
+    name           = "vm2"
+    vcpu           = 4
+    memory         = 16000                    # in MiB
+    disk           = 100 * 1024 * 1024 * 1024 # 100 GB
+    ip             = "192.168.8.201"
+    mac            = "52:54:00:00:00:01"
+    cloudinit_file = "cloud_init.cfg"
+    description    = ""
     volumes = [
       {
         name = "vdb"
@@ -51,13 +53,14 @@ vms = [
     ]
   },
   {
-    name        = "vm3"
-    vcpu        = 4
-    memory      = 16000                    # in MiB
-    disk        = 100 * 1024 * 1024 * 1024 # 100 GB
-    ip          = "192.168.8.202"
-    mac         = "52:54:00:00:00:02"
-    description = ""
+    name           = "vm3"
+    vcpu           = 4
+    memory         = 16000                    # in MiB
+    disk           = 100 * 1024 * 1024 * 1024 # 100 GB
+    ip             = "192.168.8.202"
+    mac            = "52:54:00:00:00:02"
+    cloudinit_file = "cloud_init.cfg"
+    description    = ""
     volumes = [
       {
         name = "vdb"
