@@ -2,8 +2,8 @@
 
 Prepare `main.tf` as follows:
 ```
-module "kvm_cloudinit" {
-  source = "github.com/sawa2d2/terraform-modules//kvm-cloudinit/"
+module "kvm_cloudinit_bridge" {
+  source = "github.com/sawa2d2/terraform-modules//kvm-cloudinit-bridge/"
 
   # Localhost: "qemu:///system"
   # Remote   : "qemu+ssh://<user>@<host>/system"
