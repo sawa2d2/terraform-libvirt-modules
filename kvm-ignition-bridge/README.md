@@ -5,7 +5,7 @@ Prepare `main.tf` as follows:
 module "kvm_cloudinit" {
   source                  = "github.com/sawa2d2/terraform-modules//kvm-cloudinit/"
   libvirt_uri             = "qemu:///system"
-  vm_base_image_uri       = "/var/lib/libvirt/images/Rocky-9-GenericCloud.latest.x86_64.qcow2"
+  vm_base_image_uri       = "/var/lib/libvirt/images/fedora-coreos-38.20231002.3.1-qemu.x86_64.qcow2"
   virtual_bridge          = "br0"
   gateway                 = "192.168.8.1"
   nameservers             = "[\"192.168.8.1\"]"
