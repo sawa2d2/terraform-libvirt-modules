@@ -2,8 +2,8 @@
 
 Prepare `main.tf` as follows:
 ```
-module "kvm_cloudinit" {
-  source                  = "github.com/sawa2d2/terraform-modules//kvm-cloudinit/"
+module "kvm_ignition_bridge" {
+  source                  = "github.com/sawa2d2/terraform-modules//kvm-ignition-bridge/"
   libvirt_uri             = "qemu:///system"
   vm_base_image_uri       = "/var/lib/libvirt/images/fedora-coreos-38.20231002.3.1-qemu.x86_64.qcow2"
   virtual_bridge          = "br0"
