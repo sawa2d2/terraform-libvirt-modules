@@ -4,6 +4,18 @@ resource "libvirt_network" "network" {
   domain = "ocp4.example.com"
   addresses = [var.cidr]
 
+  dns{
+    local_only = true
+
+    dynamic "hosts" {
+      for_each = var.vms
+      content {
+        hostname = hosts.value.name
+        ip       = hosts.value.ip
+      }
+    }
+  }
+
   dnsmasq_options {
     dynamic "options" {
       for_each = var.dnsmasq_options
