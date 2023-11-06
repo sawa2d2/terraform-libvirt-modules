@@ -10,15 +10,15 @@ vm_base_image_uri = "/var/lib/libvirt/images/fedora-coreos-38.20231002.3.1-qemu.
 network_name = "okdnet"
 cidr         = "10.128.0.0/14"
 
-dnsmasq_addresses = [
-  "/api.dev.okd.lan/10.128.0.1",
-  "/api-int.dev.okd.lan/10.128.0.1",
-  "/okd-bootstrap.dev.okd.lan/10.128.0.100",
-  "/okd-master-1.dev.okd.lan/10.128.0.101",
-  "/okd-master-2.dev.okd.lan/10.128.0.102",
-  "/okd-master-3.dev.okd.lan/10.128.0.103",
-  "/okd-worker-1.dev.okd.lan/10.128.0.104",
-  "/okd-worker-2.dev.okd.lan/10.128.0.105",
+dnsmasq_options = [
+  {
+    "option_name" : "address"
+    "option_value" : "/coreos.example.com/10.128.0.100",
+  },
+  {
+    "option_name" : "ptr-record"
+    "option_value" : "100.0.128.10.in-addr.arpa,\"coreos.example.com\"",
+  },
 ]
 
 vms = [

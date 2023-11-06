@@ -1,15 +1,15 @@
 resource "libvirt_network" "network" {
   name = var.network_name
   mode = "nat"
-  #domain = "okd.lan"
+  #domain = "example.com"
   addresses = [var.cidr]
 
   dnsmasq_options {
     dynamic "options" {
-      for_each = var.dnsmasq_addresses
+      for_each = var.dnsmasq_options
       content {
-        option_name  = "address"
-        option_value = options.value
+        option_name  = options.value["option_name"]
+        option_value = options.value["option_value"]
       }
     }
   }

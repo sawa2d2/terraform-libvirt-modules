@@ -15,8 +15,13 @@ variable "cidr" {
   type = string
 }
 
-variable "dnsmasq_addresses" {
-  type = list(string)
+variable "dnsmasq_options" {
+  type = list(
+    object({
+      option_name  = string
+      option_value = string
+    })
+  )
 }
 
 variable "pool" {
