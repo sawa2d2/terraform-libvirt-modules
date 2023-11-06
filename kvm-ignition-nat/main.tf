@@ -7,6 +7,16 @@ resource "libvirt_network" "network" {
   dns{
     local_only = true
 
+    hosts {
+      hostname = "api.ocp4.example.com"
+      ip       = "192.168.126.5"
+    }
+
+    hosts {
+      hostname = "api-int.ocp4.example.com"
+      ip       = "192.168.126.5"
+    }
+
     dynamic "hosts" {
       for_each = var.vms
       content {
