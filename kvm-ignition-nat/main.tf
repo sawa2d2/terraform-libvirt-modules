@@ -1,7 +1,7 @@
 resource "libvirt_network" "network" {
   name = var.network_name
   mode = "nat"
-  #domain = "example.com"
+  domain = "example.com"
   addresses = [var.cidr]
 
   dnsmasq_options {
