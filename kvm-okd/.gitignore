@@ -1,0 +1,4 @@
+auth/
+*.ign
+.openshift_install_state.json 
+metadata.json
