@@ -7,6 +7,7 @@ $ openshift-install create ignition-configs
 
 Prepare main.tf:
 ```
+
 module "kvm_okd" {
   source = "github.com/sawa2d2/terraform-modules//kvm-okd/"
 
@@ -18,14 +19,14 @@ module "kvm_okd" {
   nameservers                = ["192.168.126.1"]
   use_dns_instead_of_haproxy = true
   load_balancer_ip           = "192.168.126.5"
-  
+
   # Download a CoreOS image from:
   #   $ openshift-install version
   #   openshift-install 4.14.0-0.okd-2023-10-28-073550
   #   $ wget $(openshift-install coreos print-stream-json | jq -r '.architectures.x86_64.artifacts.qemu.formats["qcow2.xz"].disk.location')
   #   $ xz -dv *.qcow2.xz
   vm_base_image_uri = "/var/lib/libvirt/images/fedora-coreos-38.20231002.3.1-qemu.x86_64.qcow2"
-  
+
   bootstrap = {
     name          = "bootstrap"
     vcpu          = 4
@@ -37,7 +38,7 @@ module "kvm_okd" {
     description   = ""
     volumes       = []
   }
-  
+
   masters = [
     {
       name          = "master0"
@@ -73,7 +74,7 @@ module "kvm_okd" {
       volumes       = []
     },
   ]
-  
+
   workers = [
     {
       name          = "worker0"
@@ -98,4 +99,5 @@ module "kvm_okd" {
       volumes       = []
     },
   ]
+}
 ```
