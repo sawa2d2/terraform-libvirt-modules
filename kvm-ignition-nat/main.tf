@@ -4,10 +4,10 @@ resource "libvirt_network" "network" {
   domain    = var.domain
   bridge    = var.bridge_name
   addresses = [var.cidr]
+  autostart = true
 
   dns {
     local_only = true
-
     dynamic "hosts" {
       for_each = var.dns_hosts
       content {

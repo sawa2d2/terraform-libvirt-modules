@@ -9,7 +9,7 @@ vm_base_image_uri = "/var/lib/libvirt/images/fedora-coreos-38.20231002.3.1-qemu.
 
 network_name = "okdnet"
 domain       = "ocp4.example.com"
-bridge_name  = "tt0"
+bridge_name  = "mybr0"
 cidr         = "10.0.0.0/14"
 nameservers  = ["10.1.0.1"]
 
