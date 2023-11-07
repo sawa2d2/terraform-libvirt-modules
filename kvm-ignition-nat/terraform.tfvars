@@ -8,7 +8,21 @@ libvirt_uri = "qemu:///system"
 vm_base_image_uri = "/var/lib/libvirt/images/fedora-coreos-38.20231002.3.1-qemu.x86_64.qcow2"
 
 network_name = "okdnet"
-cidr         = "10.128.0.0/14"
+domain       = "ocp4.example.com"
+bridge_name  = "tt0"
+cidr         = "10.0.0.0/14"
+nameservers  = ["10.1.0.1"]
+
+dns_hosts = [
+  {
+    hostname = "api.ocp4.example.com"
+    ip       = "192.168.126.5"
+  },
+  {
+    hostname = "api-int.ocp4.example.com"
+    ip       = "192.168.126.5"
+  },
+]
 
 dnsmasq_options = [
   {
@@ -27,7 +41,7 @@ vms = [
     vcpu          = 4
     memory        = 16000                    # in MiB
     disk          = 100 * 1024 * 1024 * 1024 # 100 GB
-    ip            = "10.128.0.100"
+    ip            = "10.0.0.10"
     mac           = "52:54:00:00:00:00"
     ignition_file = "ignition.ign"
     description   = ""

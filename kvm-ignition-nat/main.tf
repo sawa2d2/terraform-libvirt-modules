@@ -1,26 +1,17 @@
 resource "libvirt_network" "network" {
-  name = var.network_name
-  mode = "nat"
-  domain = "ocp4.example.com"
+  name      = var.network_name
+  mode      = "nat"
+  domain    = var.domain
+  bridge    = var.bridge_name
   addresses = [var.cidr]
 
-  dns{
+  dns {
     local_only = true
 
-    hosts {
-      hostname = "api.ocp4.example.com"
-      ip       = "192.168.126.5"
-    }
-
-    hosts {
-      hostname = "api-int.ocp4.example.com"
-      ip       = "192.168.126.5"
-    }
-
     dynamic "hosts" {
-      for_each = var.vms
+      for_each = var.dns_hosts
       content {
-        hostname = hosts.value.name
+        hostname = hosts.value.hostname
         ip       = hosts.value.ip
       }
     }
