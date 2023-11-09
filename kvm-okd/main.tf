@@ -47,6 +47,10 @@ module "kvm_ignition_nat" {
       },
       {
         option_name  = "address"
+        option_value = "/*.apps.${var.domain}/${var.load_balancer.ip}"
+      },
+      {
+        option_name  = "address"
         option_value = "/bootstrap.${var.domain}/${var.bootstrap.ip}"
       },
     ],
