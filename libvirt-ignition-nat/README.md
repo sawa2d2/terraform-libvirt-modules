@@ -1,7 +1,9 @@
 # Usage
 Prepare `main.tf` as follows:
 ```
-module "kvm_ignition_nat" {
+module "libvirt_ignition_nat" {
+  source = "github.com/sawa2d2/terraform-modules//libvirt-ignition-nat/"
+
   # Localhost: "qemu:///system"
   # Remote   : "qemu+ssh://<user>@<host>/system"
   libvirt_uri = "qemu:///system"
