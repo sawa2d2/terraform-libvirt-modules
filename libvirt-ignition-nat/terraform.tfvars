@@ -9,35 +9,6 @@ libvirt_uri = "qemu:///system"
 vm_base_image_uri = "/var/lib/libvirt/images/fedora-coreos-38.20230609.3.0-qemu.x86_64.qcow2"
 
 network_name = "mynet"
-domain       = "example.com"
-bridge_name  = "mybr0"
-cidr         = "192.168.123.0/24"
-nameservers  = ["192.168.123.1"]
-
-# Optional:
-#dns_hosts = [
-#  {
-#    hostname = "api.ocp4.example.com"
-#    ip       = "192.168.126.5"
-#  },
-#  {
-#    hostname = "api-int.ocp4.example.com"
-#    ip       = "192.168.126.5"
-#  },
-#]
-
-# Optional:
-#dnsmasq_options = [
-#  {
-#    "option_name" : "address"
-#    "option_value" : "/coreos.example.com/10.128.0.100",
-#  },
-#  {
-#    "option_name" : "ptr-record"
-#    "option_value" : "100.0.128.10.in-addr.arpa,\"coreos.example.com\"",
-#  },
-#]
-
 vms = [
   {
     name          = "coreos"

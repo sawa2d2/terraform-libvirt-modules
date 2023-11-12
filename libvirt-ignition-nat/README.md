@@ -1,10 +1,12 @@
 # Usage
+Note: Create libvirt network in advance (e.g. `mynet`).
+
 Prepare `main.tf` as follows:
 ```
 module "libvirt_ignition_nat" {
   source = "github.com/sawa2d2/terraform-modules//libvirt-ignition-nat/"
 
-  # Localhost: "qemu:///system"
+# Localhost: "qemu:///system"
   # Remote   : "qemu+ssh://<user>@<host>/system"
   libvirt_uri = "qemu:///system"
   
@@ -15,35 +17,6 @@ module "libvirt_ignition_nat" {
   vm_base_image_uri = "/var/lib/libvirt/images/fedora-coreos-38.20230609.3.0-qemu.x86_64.qcow2"
   
   network_name = "mynet"
-  domain       = "example.com"
-  bridge_name  = "mybr0"
-  cidr         = "192.168.123.0/24"
-  nameservers  = ["192.168.123.1"]
-  
-  # Optional:
-  #dns_hosts = [
-  #  {
-  #    hostname = "api.ocp4.example.com"
-  #    ip       = "192.168.126.5"
-  #  },
-  #  {
-  #    hostname = "api-int.ocp4.example.com"
-  #    ip       = "192.168.126.5"
-  #  },
-  #]
-  
-  # Optional:
-  #dnsmasq_options = [
-  #  {
-  #    "option_name" : "address"
-  #    "option_value" : "/coreos.example.com/10.128.0.100",
-  #  },
-  #  {
-  #    "option_name" : "ptr-record"
-  #    "option_value" : "100.0.128.10.in-addr.arpa,\"coreos.example.com\"",
-  #  },
-  #]
-  
   vms = [
     {
       name          = "coreos"
@@ -59,4 +32,3 @@ module "libvirt_ignition_nat" {
   ]
 }
 ```
-

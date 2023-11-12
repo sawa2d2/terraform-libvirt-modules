@@ -1,17 +1,3 @@
-module "libvirt_nat" {
-  source      = "../libvirt-nat"
-  libvirt_uri = var.libvirt_uri
-
-  network_name = var.network_name
-  domain       = var.domain
-  bridge_name  = var.bridge_name
-  cidr         = var.cidr
-  nameservers  = var.nameservers
-
-  dns_hosts       = var.dns_hosts
-  dnsmasq_options = var.dnsmasq_options
-}
-
 data "template_file" "ignition_file" {
   count    = length(var.vms)
   template = file(var.vms[count.index].ignition_file)
