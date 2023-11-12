@@ -11,8 +11,8 @@ vm_base_image_uri = "/var/lib/libvirt/images/fedora-coreos-38.20230609.3.0-qemu.
 network_name = "mynet"
 domain       = "example.com"
 bridge_name  = "mybr0"
-cidr         = "10.0.0.0/14"
-nameservers  = ["10.1.0.1"]
+cidr         = "192.168.123.0/24"
+nameservers  = ["192.168.123.1"]
 
 # Optional:
 #dns_hosts = [
@@ -44,7 +44,7 @@ vms = [
     vcpu          = 4
     memory        = 16000                    # in MiB
     disk          = 100 * 1024 * 1024 * 1024 # 100 GB
-    ip            = "10.0.0.10"
+    ip            = "192.168.123.100"
     mac           = "52:54:00:00:00:00"
     ignition_file = "ignition.ign"
     description   = ""
