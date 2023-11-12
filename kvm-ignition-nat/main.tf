@@ -1,31 +1,15 @@
-resource "libvirt_network" "network" {
-  name      = var.network_name
-  mode      = "nat"
-  domain    = var.domain
-  bridge    = var.bridge_name
-  addresses = [var.cidr]
-  autostart = true
+module "libvirt_nat" {
+  source      = "../libvirt-nat"
+  libvirt_uri = var.libvirt_uri
 
-  dns {
-    local_only = true
-    dynamic "hosts" {
-      for_each = var.dns_hosts
-      content {
-        hostname = hosts.value.hostname
-        ip       = hosts.value.ip
-      }
-    }
-  }
+  network_name = var.network_name
+  domain       = var.domain
+  bridge_name  = var.bridge_name
+  cidr         = var.cidr
+  nameservers  = var.nameservers
 
-  dnsmasq_options {
-    dynamic "options" {
-      for_each = var.dnsmasq_options
-      content {
-        option_name  = options.value["option_name"]
-        option_value = options.value["option_value"]
-      }
-    }
-  }
+  dns_hosts       = var.dns_hosts
+  dnsmasq_options = var.dnsmasq_options
 }
 
 data "template_file" "ignition_file" {
@@ -68,7 +52,7 @@ resource "libvirt_domain" "vm" {
   autostart       = true
 
   network_interface {
-    network_name = libvirt_network.network.name
+    network_name = var.network_name
     hostname     = var.vms[count.index].name
     addresses    = [var.vms[count.index].ip]
     mac          = var.vms[count.index].mac

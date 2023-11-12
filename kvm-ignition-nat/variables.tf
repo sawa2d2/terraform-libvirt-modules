@@ -18,6 +18,7 @@ variable "dns_hosts" {
       ip       = string
     })
   )
+  default = []
 }
 
 variable "domain" {
@@ -43,6 +44,7 @@ variable "dnsmasq_options" {
       option_value = string
     })
   )
+  default = []
 }
 
 variable "pool" {
