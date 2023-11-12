@@ -16,7 +16,7 @@ module "kvm_cloudinit_bridge" {
   
   # Networking
   bridge      = "br0"
-  cidr_prefix = "24"
+  cidr        = "192.168.8.0/24"
   gateway     = "192.168.8.1"
   nameservers = "[\"192.168.8.1\"]"
   

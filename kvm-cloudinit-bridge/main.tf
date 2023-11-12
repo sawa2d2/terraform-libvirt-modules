@@ -1,3 +1,9 @@
+locals {
+  cidr_splitted = split("/", var.cidr)
+  cidr_subnet   = local.cidr_splitted[0]
+  cidr_prefix   = local.cidr_splitted[1]
+}
+
 data "template_file" "user_data" {
   count    = length(var.vms)
   template = file(var.vms[count.index].cloudinit_file)
@@ -7,7 +13,7 @@ data "template_file" "network_config" {
   count    = length(var.vms)
   template = file("${path.module}/network_config.cfg")
   vars = {
-    ip          = "${var.vms[count.index].ip}/${var.cidr_prefix}"
+    ip          = "${var.vms[count.index].ip}/${local.cidr_prefix}"
     gateway     = var.gateway
     nameservers = var.nameservers
   }

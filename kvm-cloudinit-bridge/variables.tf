@@ -10,11 +10,11 @@ variable "vm_base_image_uri" {
 variable "bridge" {
   type    = string
   default = "br0"
-
 }
 
-variable "cidr_prefix" {
-  type = string
+variable "cidr" {
+  type    = string
+  default = "192.168.0.0/24"
 }
 
 variable "gateway" {
