@@ -8,11 +8,10 @@ libvirt_uri = "qemu:///system"
 #   $ xz -dv *.qcow2.xz
 vm_base_image_uri = "/var/lib/libvirt/images/fedora-coreos-38.20231002.3.1-qemu.x86_64.qcow2"
 
-# Networking
-bridge      = "br0"
-cidr_prefix = 24
-gateway     = "192.168.8.1"
-nameservers = "[\"192.168.8.1\"]"
+# Optional:
+#pool = "default"
+
+bridge = "br0"
 
 vms = [
   {
@@ -23,7 +22,7 @@ vms = [
     ip            = "192.168.8.100/24"
     mac           = "52:54:00:00:00:00"
     ignition_file = "ignition.ign"
-    description = ""
-    volumes = []
+    description   = ""
+    volumes       = []
   }
 ]

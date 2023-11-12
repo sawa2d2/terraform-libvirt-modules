@@ -42,7 +42,7 @@ resource "libvirt_domain" "vm" {
 resource "libvirt_volume" "system" {
   count          = length(var.vms)
   name           = "${var.vms[count.index].name}.qcow2"
-  pool           = "default"
+  pool           = var.pool
   format         = "qcow2"
   base_volume_id = var.vm_base_image_uri
   size           = var.vms[count.index].disk

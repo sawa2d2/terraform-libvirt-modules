@@ -10,22 +10,7 @@ variable "vm_base_image_uri" {
 variable "bridge" {
   type    = string
   default = "br0"
-
 }
-
-variable "cidr_prefix" {
-  type = string
-}
-
-variable "gateway" {
-  type = string
-}
-
-variable "nameservers" {
-  type    = string
-  default = "[\"8.8.8.8\", \"8.8.4.4\"]"
-}
-
 
 variable "pool" {
   type    = string
