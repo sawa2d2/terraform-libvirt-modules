@@ -2,6 +2,8 @@ locals {
   cidr_splitted = split("/", var.cidr)
   cidr_subnet   = local.cidr_splitted[0]
   cidr_prefix   = local.cidr_splitted[1]
+
+  nameservers_string = "[\"${join("\", \"", var.nameservers)}\"]"
 }
 
 data "template_file" "user_data" {
@@ -15,7 +17,7 @@ data "template_file" "network_config" {
   vars = {
     ip          = "${var.vms[count.index].ip}/${local.cidr_prefix}"
     gateway     = var.gateway
-    nameservers = var.nameservers
+    nameservers = local.nameservers_string
   }
 }
 

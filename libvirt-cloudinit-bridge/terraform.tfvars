@@ -11,7 +11,7 @@ vm_base_image_uri = "/var/lib/libvirt/images/Rocky-9-GenericCloud.latest.x86_64.
 bridge      = "br0"
 cidr        = "192.168.8.0/24"
 gateway     = "192.168.8.1"
-nameservers = "[\"192.168.8.1\"]"
+nameservers = ["192.168.8.1"]
 
 pool = "default"
 

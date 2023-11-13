@@ -22,8 +22,8 @@ variable "gateway" {
 }
 
 variable "nameservers" {
-  type    = string
-  default = "[\"8.8.8.8\", \"8.8.4.4\"]"
+  type    = list(string)
+  default = ["8.8.8.8", "8.8.4.4"]
 }
 
 variable "pool" {
