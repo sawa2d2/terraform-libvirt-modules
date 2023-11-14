@@ -15,7 +15,8 @@ data "template_file" "network_config" {
   count    = length(var.vms)
   template = file("${path.module}/network_config.cfg")
   vars = {
-    ip          = "${var.vms[count.index].ip}/${local.cidr_prefix}"
+    ip          = var.vms[count.index].ip
+    cidr_prefix = local.cidr_prefix
     gateway     = var.gateway
     nameservers = local.nameservers_string
   }
