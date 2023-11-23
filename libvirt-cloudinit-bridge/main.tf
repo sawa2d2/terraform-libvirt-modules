@@ -1,14 +1,27 @@
 locals {
-  cidr_splitted = split("/", var.cidr)
-  cidr_subnet   = local.cidr_splitted[0]
-  cidr_prefix   = local.cidr_splitted[1]
-
+  cidr_splitted      = split("/", var.cidr)
+  cidr_subnet        = local.cidr_splitted[0]
+  cidr_prefix        = local.cidr_splitted[1]
   nameservers_string = "[\"${join("\", \"", var.nameservers)}\"]"
+
+  # Auto-calculate mac address from IP
+  ips_parts = [for vm in var.vms : split(".", vm.ip)]
+  mac_addrs = [
+    for ip_parts in local.ips_parts : format(
+      "52:54:00:%02X:%02X:%02X",
+      tonumber(ip_parts[1]),
+      tonumber(ip_parts[2]),
+      tonumber(ip_parts[3])
+    )
+  ]
 }
 
 data "template_file" "user_data" {
   count    = length(var.vms)
   template = file(var.vms[count.index].cloudinit_file)
+  vars = {
+    hostname = var.vms[count.index].name
+  }
 }
 
 data "template_file" "network_config" {
@@ -27,6 +40,7 @@ resource "libvirt_cloudinit_disk" "commoninit" {
   name           = "commoninit_${var.vms[count.index].name}.iso"
   user_data      = data.template_file.user_data[count.index].rendered
   network_config = data.template_file.network_config[count.index].rendered
+  pool           = var.pool
 }
 
 locals {
@@ -37,9 +51,7 @@ locals {
 }
 
 resource "libvirt_domain" "vm" {
-  count       = length(var.vms)
-  description = var.vms[count.index].description
-
+  count  = length(var.vms)
   name   = var.vms[count.index].name
   vcpu   = var.vms[count.index].vcpu
   memory = var.vms[count.index].memory
@@ -59,11 +71,11 @@ resource "libvirt_domain" "vm" {
   autostart = true
 
   network_interface {
-    hostname  = var.vms[count.index].name
-    addresses = [var.vms[count.index].ip]
-    mac       = var.vms[count.index].mac
     bridge    = var.bridge
+    addresses = [var.vms[count.index].ip]
+    mac       = local.mac_addrs[count.index]
   }
+
   qemu_agent = true
 
   cpu {

@@ -1,3 +1,16 @@
+locals {
+  # Auto-calculate mac address from IP 
+  ips_parts = [for vm in var.vms : split(".", vm.ip)]
+  mac_addrs = [
+    for ip_parts in local.ips_parts : format(
+      "52:54:00:%02X:%02X:%02X",
+      tonumber(ip_parts[1]),
+      tonumber(ip_parts[2]),
+      tonumber(ip_parts[3])
+    )
+  ]
+}
+
 data "template_file" "ignition_file" {
   count    = length(var.vms)
   template = file(var.vms[count.index].ignition_file)
@@ -7,6 +20,7 @@ resource "libvirt_ignition" "ignition" {
   count   = length(var.vms)
   name    = "${var.vms[count.index].name}.ign"
   content = data.template_file.ignition_file[count.index].rendered
+  pool    = var.pool
 }
 
 resource "libvirt_domain" "vm" {
@@ -22,10 +36,9 @@ resource "libvirt_domain" "vm" {
   autostart       = true
 
   network_interface {
-    hostname  = var.vms[count.index].name
-    addresses = [var.vms[count.index].ip]
-    mac       = var.vms[count.index].mac
     bridge    = var.bridge
+    addresses = [var.vms[count.index].ip]
+    mac       = local.mac_addrs[count.index]
   }
   qemu_agent = true
 
