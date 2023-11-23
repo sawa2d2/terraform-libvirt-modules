@@ -19,10 +19,8 @@ vms = [
     vcpu          = 4
     memory        = 16000                    # in MiB
     disk          = 100 * 1024 * 1024 * 1024 # 100 GB
-    ip            = "192.168.8.100/24"
-    mac           = "52:54:00:00:00:00"
+    ip            = "192.168.8.210"
     ignition_file = "ignition.ign"
-    description   = ""
     volumes       = []
   }
 ]
