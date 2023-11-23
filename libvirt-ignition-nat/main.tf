@@ -10,6 +10,17 @@ resource "libvirt_ignition" "ignition" {
 }
 
 locals {
+  # Auto-calculate mac address from IP
+  ips_parts = [for vm in var.vms : split(".", vm.ip)]
+  mac_addrs = [
+    for ip_parts in local.ips_parts : format(
+      "52:54:00:%02X:%02X:%02X",
+      tonumber(ip_parts[1]),
+      tonumber(ip_parts[2]),
+      tonumber(ip_parts[3])
+    )
+  ]
+
   volume_list      = { for vm in var.vms : "${vm.name}" => flatten([for volume in vm.volumes : volume]) }
   volume_name_list = [for vm, volumes in local.volume_list : [for volume in volumes : { "name" : "${vm}_${volume.name}", "disk" : volume.disk }]]
   volumes          = flatten(local.volume_name_list)
@@ -39,11 +50,9 @@ resource "libvirt_domain" "vm" {
 
   network_interface {
     network_name = var.network_name
-    hostname     = var.vms[count.index].name
     addresses    = [var.vms[count.index].ip]
-    mac          = var.vms[count.index].mac
+    mac          = local.mac_addrs[count.index]
   }
-  qemu_agent = true
 
   cpu {
     mode = "host-passthrough"

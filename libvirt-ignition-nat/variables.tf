@@ -24,9 +24,7 @@ variable "vms" {
       memory        = number
       disk          = number
       ip            = string
-      mac           = string
       ignition_file = string
-      description   = string
       volumes = list(
         object({
           name = string
