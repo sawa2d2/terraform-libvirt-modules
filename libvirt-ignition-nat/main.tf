@@ -10,7 +10,7 @@ resource "libvirt_ignition" "ignition" {
   #pool    = var.pool
   # The error https://github.com/dmacvicar/terraform-provider-libvirt/issues/978 may occur
   # for some reason when changing pool location, so keep as default, not `var.pool`.
-  pool    = "default" 
+  pool = "default"
 }
 
 locals {
@@ -83,3 +83,12 @@ resource "libvirt_volume" "system" {
   base_volume_id = var.vm_base_image_uri
   size           = var.vms[count.index].disk
 }
+
+resource "libvirt_volume" "volume" {
+  count  = length(local.volumes)
+  name   = "${local.volumes[count.index].name}.qcow2"
+  pool   = var.pool
+  format = "qcow2"
+  size   = local.volumes[count.index].disk
+}
+ 

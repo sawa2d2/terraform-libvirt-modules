@@ -17,6 +17,11 @@ vms = [
     disk          = 100 * 1024 * 1024 * 1024 # 100 GB
     ip            = "192.168.122.100"
     ignition_file = "ignition.ign"
-    volumes       = []
+    volumes = [
+      {
+        name = "additional_disk"
+        disk = 100 * 1024 * 1024 * 1024 # 100 GB
+      }
+    ]
   }
 ]
