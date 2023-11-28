@@ -25,11 +25,11 @@ module "libvirt_cloudinit_nat" {
       volumes = [
         {
           name = "vdb"
-          disk = 256 * 1024 * 1024 * 1024 # 1 TB 
+          disk = 256 * 1024 * 1024 * 1024 # 1 TB
         },
         {
           name = "vdc"
-          disk = 256 * 1024 * 1024 * 1024 # 1 TB 
+          disk = 256 * 1024 * 1024 * 1024 # 1 TB
         },
       ]
     },
@@ -42,8 +42,8 @@ module "libvirt_cloudinit_nat" {
       cloudinit_file = "cloud_init.cfg"
       volumes = [
         {
-          name = "vdb"
-          disk = 512 * 1024 * 1024 * 1024 # 1 TB 
+          name = "additional_disk"
+          disk = 100 * 1024 * 1024 * 1024 # 1 TB
         },
       ]
     },

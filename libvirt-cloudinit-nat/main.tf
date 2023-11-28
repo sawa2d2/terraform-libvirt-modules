@@ -59,8 +59,6 @@ resource "libvirt_domain" "vm" {
     mac          = local.mac_addrs[count.index]
   }
 
-  #qemu_agent = true
-
   cpu {
     mode = "host-passthrough"
   }
