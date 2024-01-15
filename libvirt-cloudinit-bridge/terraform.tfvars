@@ -21,7 +21,7 @@ vms = [
     vcpu           = 4
     memory         = 16000                    # in MiB
     disk           = 100 * 1024 * 1024 * 1024 # 100 GB
-    ip             = "192.168.8.51"
+    ip             = "192.168.8.101"
     cloudinit_file = "cloud_init.cfg"
     volumes = [
       {
@@ -39,7 +39,7 @@ vms = [
     vcpu           = 4
     memory         = 16000                    # in MiB
     disk           = 100 * 1024 * 1024 * 1024 # 100 GB
-    ip             = "192.168.8.52"
+    ip             = "192.168.8.102"
     cloudinit_file = "cloud_init.cfg"
     volumes = [
       {

@@ -11,19 +11,13 @@ locals {
   ]
 }
 
-data "template_file" "user_data" {
-  count    = length(var.vms)
-  template = file(var.vms[count.index].cloudinit_file)
-  vars = {
-    hostname = var.vms[count.index].name
-  }
-}
-
 resource "libvirt_cloudinit_disk" "commoninit" {
-  count     = length(var.vms)
-  name      = "commoninit_${var.vms[count.index].name}.iso"
-  user_data = data.template_file.user_data[count.index].rendered
-  pool      = var.pool
+  count = length(var.vms)
+  name  = "commoninit_${var.vms[count.index].name}.iso"
+  user_data = templatefile(var.vms[count.index].cloudinit_file, {
+    hostname = var.vms[count.index].name
+  })
+  pool = var.pool
 }
 
 locals {
