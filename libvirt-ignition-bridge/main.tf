@@ -14,7 +14,7 @@ locals {
 resource "libvirt_ignition" "ignition" {
   count   = length(var.vms)
   name    = "${var.vms[count.index].name}.ign"
-  content = templatefile(var.vms[count.index].ignition_file)
+  content = templatefile(var.vms[count.index].ignition_file, {})
   pool    = var.pool
 }
 

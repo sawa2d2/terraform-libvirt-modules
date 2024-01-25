@@ -1,7 +1,7 @@
 resource "libvirt_ignition" "ignition" {
   count   = length(var.vms)
   name    = "${var.vms[count.index].name}.ign"
-  content = templatefile(var.vms[count.index].ignition_file)
+  content = templatefile(var.vms[count.index].ignition_file, {})
   #pool    = var.pool
   # The error https://github.com/dmacvicar/terraform-provider-libvirt/issues/978 may occur
   # for some reason when changing pool location, so keep as default, not `var.pool`.
