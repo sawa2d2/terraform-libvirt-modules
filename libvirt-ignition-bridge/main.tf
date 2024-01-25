@@ -11,15 +11,10 @@ locals {
   ]
 }
 
-data "template_file" "ignition_file" {
-  count    = length(var.vms)
-  template = file(var.vms[count.index].ignition_file)
-}
-
 resource "libvirt_ignition" "ignition" {
   count   = length(var.vms)
   name    = "${var.vms[count.index].name}.ign"
-  content = data.template_file.ignition_file[count.index].rendered
+  content = templatefile(var.vms[count.index].ignition_file)
   pool    = var.pool
 }
 
@@ -40,7 +35,6 @@ resource "libvirt_domain" "vm" {
     addresses = [var.vms[count.index].ip]
     mac       = local.mac_addrs[count.index]
   }
-  qemu_agent = true
 
   cpu {
     mode = "host-passthrough"
