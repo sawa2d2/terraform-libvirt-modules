@@ -35,12 +35,14 @@ resource "libvirt_domain" "vm" {
 
   disk {
     volume_id = libvirt_volume.system[count.index].id
+    scsi      = "true"
   }
 
   dynamic "disk" {
     for_each = local.volume_list[var.vms[count.index].name]
     content {
       volume_id = libvirt_volume.volume[lookup(local.volumes_indexed, "${var.vms[count.index].name}_${disk.value.name}")].id
+      scsi      = "true"
     }
   }
 
