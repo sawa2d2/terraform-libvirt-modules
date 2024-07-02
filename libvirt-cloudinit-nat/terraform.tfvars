@@ -6,11 +6,14 @@ libvirt_uri = "qemu:///system"
 # Download the image by:
 #   sudo curl -L -o /var/lib/libvirt/images/Rocky-9-GenericCloud.latest.x86_64.qcow2 https://download.rockylinux.org/pub/rocky/9.2/images/x86_64/Rocky-9-GenericCloud.latest.x86_64.qcow2 
 vm_base_image_uri = "/var/lib/libvirt/images/Rocky-9-GenericCloud.latest.x86_64.qcow2"
+pool              = "default"
 
 # Networking
 network_name = "default"
+cidr         = "192.168.122.0/24"
+gateway      = "192.168.122.1"
+nameservers  = ["192.168.122.1"]
 
-pool = "default"
 vms = [
   {
     name           = "vm1"

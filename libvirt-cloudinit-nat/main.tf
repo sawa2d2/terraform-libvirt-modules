@@ -1,4 +1,9 @@
 locals {
+  cidr_splitted      = split("/", var.cidr)
+  cidr_subnet        = local.cidr_splitted[0]
+  cidr_prefix        = local.cidr_splitted[1]
+  nameservers_string = "[\"${join("\", \"", var.nameservers)}\"]"
+
   # Auto-calculate mac address from IP
   ips_parts = [for vm in var.vms : split(".", vm.ip)]
   mac_addrs = [
@@ -16,6 +21,12 @@ resource "libvirt_cloudinit_disk" "commoninit" {
   name  = "commoninit_${var.vms[count.index].name}.iso"
   user_data = templatefile(var.vms[count.index].cloudinit_file, {
     hostname = var.vms[count.index].name
+  })
+  network_config = templatefile("${path.module}/network_config.cfg", {
+    ip          = var.vms[count.index].ip
+    cidr_prefix = local.cidr_prefix
+    gateway     = var.gateway
+    nameservers = local.nameservers_string
   })
   pool = var.pool
 }
