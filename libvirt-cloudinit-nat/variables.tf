@@ -14,16 +14,17 @@ variable "network_name" {
 
 variable "cidr" {
   type    = string
-  default = "192.168.0.0/24"
+  default = "192.168.122.0/24"
 }
 
 variable "gateway" {
   type = string
+  default = "192.168.122.1"
 }
 
 variable "nameservers" {
   type    = list(string)
-  default = ["8.8.8.8", "8.8.4.4"]
+  default = ["192.168.122.1"]
 }
 
 
