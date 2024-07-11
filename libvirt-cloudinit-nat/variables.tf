@@ -18,7 +18,7 @@ variable "cidr" {
 }
 
 variable "gateway" {
-  type = string
+  type    = string
   default = "192.168.122.1"
 }
 

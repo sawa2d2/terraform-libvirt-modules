@@ -5,7 +5,7 @@ locals {
   nameservers_string = "[\"${join("\", \"", var.nameservers)}\"]"
 
   # Auto-calculate mac address from IP
-  ips_parts = [for vm in var.vms : split(".", vm.ip)]
+  ips_parts = [for vm in var.vms : split(".", split("/", vm.ip)[0])]
   mac_addrs = [
     for ip_parts in local.ips_parts : format(
       "52:54:00:%02X:%02X:%02X",
@@ -22,13 +22,11 @@ resource "libvirt_cloudinit_disk" "commoninit" {
   user_data = templatefile(var.vms[count.index].cloudinit_file, {
     hostname = var.vms[count.index].name
   })
-  network_config = templatefile("${path.module}/network_config.cfg", {
-    ip          = var.vms[count.index].ip
-    cidr_prefix = local.cidr_prefix
-    gateway     = var.gateway
-    nameservers = local.nameservers_string
-  })
   pool = var.pool
+}
+
+output "rendered_template" {
+  value = libvirt_cloudinit_disk.commoninit[0].network_config
 }
 
 locals {
@@ -36,6 +34,22 @@ locals {
   volume_name_list = [for vm, volumes in local.volume_list : [for volume in volumes : { "name" : "${vm}_${volume.name}", "disk" : volume.disk }]]
   volumes          = flatten(local.volume_name_list)
   volumes_indexed  = { for index, volume in local.volumes : volume.name => index }
+}
+
+resource "libvirt_network" "network-a" {
+  name      = "network-a"
+  addresses = ["10.0.10.0/24"]
+  dhcp {
+    enabled = false
+  }
+}
+
+resource "libvirt_network" "network-b" {
+  name      = "network-b"
+  addresses = ["172.16.10.0/24"]
+  dhcp {
+    enabled = false
+  }
 }
 
 resource "libvirt_domain" "vm" {
@@ -64,6 +78,22 @@ resource "libvirt_domain" "vm" {
     network_name = var.network_name
     addresses    = [var.vms[count.index].ip]
     mac          = local.mac_addrs[count.index]
+  }
+
+  network_interface {
+    network_id = libvirt_network.network-a.id
+  }
+
+  network_interface {
+    network_id = libvirt_network.network-a.id
+  }
+
+  network_interface {
+    network_id = libvirt_network.network-b.id
+  }
+
+  network_interface {
+    network_id = libvirt_network.network-b.id
   }
 
   cpu {
