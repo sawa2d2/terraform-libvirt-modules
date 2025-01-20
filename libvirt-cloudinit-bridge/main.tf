@@ -39,10 +39,11 @@ locals {
 }
 
 resource "libvirt_domain" "vm" {
-  count  = length(var.vms)
-  name   = var.vms[count.index].name
-  vcpu   = var.vms[count.index].vcpu
-  memory = var.vms[count.index].memory
+  count   = length(var.vms)
+  name    = var.vms[count.index].name
+  vcpu    = var.vms[count.index].vcpu
+  memory  = var.vms[count.index].memory
+  machine = "q35"
 
   disk {
     volume_id = libvirt_volume.system[count.index].id
@@ -66,7 +67,7 @@ resource "libvirt_domain" "vm" {
     mac       = local.mac_addrs[count.index]
   }
 
-  qemu_agent = true
+  #qemu_agent = true
 
   cpu {
     mode = "host-passthrough"
@@ -82,6 +83,10 @@ resource "libvirt_domain" "vm" {
     type        = "pty"
     target_port = "0"
     target_type = "serial"
+  }
+
+  xml {
+    xslt = file("${path.module}/patch.xsl")
   }
 }
 
